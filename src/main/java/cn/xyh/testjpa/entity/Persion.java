@@ -1,11 +1,14 @@
 package cn.xyh.testjpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
+@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 public class Persion implements Serializable, Cloneable{
 
     @Id
