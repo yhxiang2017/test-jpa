@@ -22,6 +22,11 @@ public class ResponseResult<T> implements Serializable {
         return result;
     }
 
+    public static ResponseResult success(){
+        ResponseResult responseResult = new ResponseResult("SUCCESS", null);
+        return responseResult;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -36,5 +41,16 @@ public class ResponseResult<T> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public static ResponseResult failed() {
+        ResponseResult result = new ResponseResult("ERROR", null);
+
+        return result;
+    }
+
+    public static ResponseResult failed(String message){
+        ResponseResult result = new ResponseResult(message, null);
+        return result;
     }
 }

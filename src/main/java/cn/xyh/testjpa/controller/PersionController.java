@@ -4,6 +4,7 @@ import cn.xyh.testjpa.entity.Persion;
 import cn.xyh.testjpa.entity.model.PersionModel;
 import cn.xyh.testjpa.repository.PersionRepository;
 import cn.xyh.testjpa.util.ResponseResult;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,34 @@ public class PersionController {
         return ResponseResult.success(persion);
     }
 
+
+    @DeleteMapping("delById")
+    public ResponseResult delete (long id) {
+
+        Persion persion = persionRepository.getOne(id);
+
+        if (persion == null){
+            return ResponseResult.failed();
+        }
+        persionRepository.delete(persion);
+
+        return ResponseResult.success();
+    }
+
+    @PutMapping("updateById")
+    public ResponseResult update (long id) {
+
+        Persion persion = persionRepository.getOne(id);
+
+        if (persion == null){
+            return ResponseResult.failed();
+        }
+        persion.setName("lisi");
+
+        persionRepository.saveAndFlush(persion);
+
+        return ResponseResult.success();
+    }
     @GetMapping("testJson")
     public List<Persion> testJson(){
         List<Persion> persions = new ArrayList<Persion>();
