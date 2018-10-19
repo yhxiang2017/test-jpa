@@ -1,24 +1,50 @@
 package cn.xyh.testjpa.aop;
 
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Aspect
+@Component
 public class AspectConfig {
 
+    private final static Logger log = LoggerFactory.getLogger(AspectConfig.class);
 
-    @Pointcut("execution(public * cn.xyh.testjpa.controller.*(..))")
+//    @Pointcut("execution(public * cn.xyh.testjpa.controller.*(..))")
+    @Pointcut("execution(public * cn.xyh.testjpa.controller.*.*(..))")
     public void testPointcut() {}
 
     @Before("testPointcut()")
-    public void haha () {
+    public void doBefore (JoinPoint joinPoint) {
+
+        //TODO 待完善完整的请求信息显示
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+
+        log.info("----------------请求信息----------------");
+        log.info("url: {}", request.getRequestURL());
+        log.info("method: {}", request.getMethod());
+        log.info("IP: {}", request.getRemoteAddr());
+        log.info("Params: {}", joinPoint.getArgs());
+
         System.out.println("before execute print 'haha'");
     }
 
     @AfterReturning("testPointcut()")
-    public void xixi () {
+    public void doAfter () {
         System.out.println("after execute print 'xixi'");
+    }
+
+    @AfterThrowing(pointcut = "testPointcut()", throwing = "e")
+    public void doThrow(JoinPoint joinPoint, Throwable e) {
+        if (e != null) {
+            log.info(e.getMessage(), e);
+        }
     }
 }

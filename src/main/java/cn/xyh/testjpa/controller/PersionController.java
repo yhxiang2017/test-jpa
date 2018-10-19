@@ -60,24 +60,11 @@ public class PersionController {
 
         return ResponseResult.success();
     }
-    @GetMapping("testJson")
-    public List<Persion> testJson(){
-        List<Persion> persions = new ArrayList<Persion>();
-
-        persions.add(new Persion(12, "xiaoming"));
-        persions.add(new Persion(13, "dabai"));
-        persions.add(new Persion(14, "和哈"));
-
-        return   persions;
-    }
 
     @GetMapping("test")
-    public ResponseResult test() {
-        Persion persion = new Persion();
-        persion.setAge(12);
-        persion.setName("hehe");
-
-        ResponseResult responseResult = new ResponseResult("OK",persion);
-        return responseResult;
+    public void testAfterThrowing () {
+        int i = 1 / 0;
+        System.out.println(i);
     }
+
 }
