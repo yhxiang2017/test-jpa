@@ -9,6 +9,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 @Aspect
 @Component
@@ -31,7 +32,8 @@ public class AspectConfig {
         log.info("url: {}", request.getRequestURL());
         log.info("method: {}", request.getMethod());
         log.info("IP: {}", request.getRemoteAddr());
-        log.info("Params: {}", joinPoint.getArgs());
+        log.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        log.info("Params: {}", Arrays.toString(joinPoint.getArgs()));
 
         System.out.println("before execute print 'haha'");
     }

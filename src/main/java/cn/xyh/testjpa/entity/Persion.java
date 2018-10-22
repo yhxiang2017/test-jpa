@@ -2,9 +2,7 @@ package cn.xyh.testjpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -12,9 +10,10 @@ import java.io.Serializable;
 public class Persion implements Serializable, Cloneable{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column
     private int age;
 
     private String name;

@@ -1,12 +1,12 @@
 package cn.xyh.testjpa.controller;
 
 import cn.xyh.testjpa.entity.Persion;
-import cn.xyh.testjpa.entity.model.PersionModel;
 import cn.xyh.testjpa.repository.PersionRepository;
 import cn.xyh.testjpa.util.ResponseResult;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,13 +21,15 @@ public class PersionController {
     @PostMapping("addPersion")
     public ResponseResult addPersion (@RequestBody Persion persion) {
         Persion save = persionRepository.save(persion);
-        PersionModel model = new PersionModel();
-        BeanUtils.copyProperties(save, model);
-        return ResponseResult.success(model);
+//        PersionModel model = new PersionModel();
+//        BeanUtils.copyProperties(save, model);
+//        return ResponseResult.success(model);
+        return ResponseResult.success();
     }
 
     @GetMapping("getById")
-    public ResponseResult getById (Long id) {
+    public ResponseResult getById (Long id, String name) {
+        System.out.println(name);
         Persion persion = persionRepository.getOne(id);
         return ResponseResult.success(persion);
     }
@@ -62,9 +64,17 @@ public class PersionController {
     }
 
     @GetMapping("test")
-    public void testAfterThrowing () {
-        int i = 1 / 0;
-        System.out.println(i);
+    public void testAfterThrowing (long id) {
+        persionRepository.queryPersionById(id);
+    }
+
+    @GetMapping("testPage")
+    public ResponseResult pageLimit(int page, int size){
+        Pageable pageable = new PageRequest(page, size, Sort.Direction.DESC, "id");
+        Page<Persion> persions = persionRepository.findAll(pageable);
+        PageImpl<Persion> page1 = new PageImpl<>(persions.getContent(), pageable, persions.getTotalElements());
+
+        return ResponseResult.success(page1);
     }
 
 }
