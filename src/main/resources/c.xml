@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<COMM>  
+        <PUB>   
+                <TRXTIME>交易时间</TRXTIME>  
+                <TRXDATE>交易日期</TRXDATE>  
+        </PUB>      
+        <OUT>       
+                <TRXCODE>83390</TRXCODE>      
+                <RETCODE>响应码</RETCODE>  
+                <RETMSG>响应信息</RETMSG>     
+                <POSID>pos终端编号</POSID>  
+                <MERID>pos商场编号</MERID>    
+                <PINKEY>PIN_KEY</PINKEY>  
+                <TKEY>T_KEY</TKEY>  
+        </OUT>  
+</COMM>  
