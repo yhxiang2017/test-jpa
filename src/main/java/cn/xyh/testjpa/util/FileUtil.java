@@ -1,10 +1,8 @@
 package cn.xyh.testjpa.util;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,20 +14,41 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+@RestController
 public class FileUtil {
 
     public static void main(String[] args) {
         File file = new File("c:/test/d.xml");
         FileUtil f = new FileUtil();
-        f.createXMLByDOM(file);
+//        f.createXMLByDOM(file);
 
 //        OutputStream out = new BufferedOutputStream();
     }
 
-    public void createXMLByDOM(File dest) {
+
+    @GetMapping("/export")
+    public void export(HttpServletResponse response) {
+//        response.setHeader("content-type", "text/xml;charset=UTF-8");
+        String fileName = "测试.xml";
+        response.setHeader("content-disposition", "attachment;filename="+fileName);
+        OutputStream os = null;
+        try {
+           os = response.getOutputStream();
+           createXMLByDOM(os);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    public void createXMLByDOM(OutputStream os) {
         // 创建DocumentBuilderFactory
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
@@ -82,7 +101,7 @@ public class FileUtil {
             tf.setOutputProperty(OutputKeys.INDENT, "yes");
 
             // 使用Transformer的transform()方法将DOM树转换成XML
-            tf.transform(new DOMSource(document), new StreamResult(dest));
+            tf.transform(new DOMSource(document), new StreamResult(os));
 
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
