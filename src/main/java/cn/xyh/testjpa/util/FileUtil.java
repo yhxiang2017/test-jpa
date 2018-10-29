@@ -7,11 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -94,7 +90,18 @@ public class FileUtil {
             // 将根节点添加到Document下
             document.appendChild(bookstore);
 
-
+            Source source = new DOMSource(document);
+            StringWriter stringWriter = new StringWriter();
+            Result result = new StreamResult(stringWriter);
+            TransformerFactory factoryaa = TransformerFactory.newInstance();
+            Transformer transformer = factoryaa.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
+            transformer.transform(source, result);
+            String s = stringWriter.getBuffer().toString();
+            System.out.println(s);
             /*
              * 下面开始实现： 生成XML文件
              */
