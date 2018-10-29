@@ -1,6 +1,7 @@
 package cn.xyh.testjpa.util;
 
 import java.io.*;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
@@ -34,11 +35,14 @@ public class FileUtil {
     @GetMapping("/export")
     public void export(HttpServletResponse response) {
 //        response.setHeader("content-type", "text/xml;charset=UTF-8");
-        String fileName = "测试.xml";
-        response.setHeader("content-disposition", "attachment;filename="+fileName);
-        OutputStream os = null;
+//        Date date = new Date();
+//        response.setCharacterEncoding("UTF-8");
+//        response.setContentType("text/xml;charset=UTF-8");
         try {
-           os = response.getOutputStream();
+            String fileName = "哈哈_"+ new Date().getTime() +".xml";
+            OutputStream os = null;
+            response.setHeader("content-disposition", "attachment;filename=" + java.net.URLEncoder.encode(fileName, "UTF-8"));
+            os = response.getOutputStream();
            createXMLByDOM(os);
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,28 +64,32 @@ public class FileUtil {
             Document document = builder.newDocument();
 
             // 设置XML声明中standalone为yes，即没有dtd和schema作为该XML的说明文档，且不显示该属性
-            // document.setXmlStandalone(true);
+             document.setXmlStandalone(true);
 
             // 创建根节点
             Element bookstore = document.createElement("bookstore");
 
-            // 创建子节点，并设置属性
-            Element book = document.createElement("book");
-            book.setAttribute("id", "1");
+            for (int i = 0; i < 3; i++) {
+                Element book = document.createElement("book");
 
-            // 为book添加子节点
-            Element name = document.createElement("name");
-            name.setTextContent("安徒生童话");
-            book.appendChild(name);
-            Element author = document.createElement("author");
-            author.setTextContent("安徒生");
-            book.appendChild(author);
-            Element price = document.createElement("price");
-            price.setTextContent("49");
-            book.appendChild(price);
+                // 创建子节点，并设置属性
+                book.setAttribute("id", "1");
 
-            // 为根节点添加子节点
-            bookstore.appendChild(book);
+                // 为book添加子节点
+                Element name = document.createElement("name");
+                name.setTextContent("安徒生童话");
+                book.appendChild(name);
+                Element author = document.createElement("author");
+                author.setTextContent("安徒生");
+                book.appendChild(author);
+                Element price = document.createElement("price");
+                price.setTextContent("49");
+                book.appendChild(price);
+                // 为根节点添加子节点
+                bookstore.appendChild(book);
+
+            }
+
 
             // 将根节点添加到Document下
             document.appendChild(bookstore);
@@ -99,6 +107,9 @@ public class FileUtil {
 
             // 设置输出数据时换行
             tf.setOutputProperty(OutputKeys.INDENT, "yes");
+            tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            tf.setOutputProperty(OutputKeys.METHOD, "xml");
+            tf.setOutputProperty(OutputKeys.STANDALONE, "yes");
 
             // 使用Transformer的transform()方法将DOM树转换成XML
             tf.transform(new DOMSource(document), new StreamResult(os));
