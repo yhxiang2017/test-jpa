@@ -1,6 +1,8 @@
 package cn.xyh.testjpa.controller;
 
+import cn.xyh.testjpa.entity.Company;
 import cn.xyh.testjpa.entity.Persion;
+import cn.xyh.testjpa.repository.CompanyRepository;
 import cn.xyh.testjpa.repository.PersionRepository;
 import cn.xyh.testjpa.util.ResponseResult;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,8 @@ public class PersionController {
 
     @Autowired
     private PersionRepository persionRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
 
     @PostMapping("addPersion")
     public ResponseResult addPersion (@RequestBody Persion persion) {
@@ -75,5 +79,14 @@ public class PersionController {
         PageImpl<Persion> page1 = new PageImpl<>(persions.getContent(), pageable, persions.getTotalElements());
 
         return ResponseResult.success(page1);
+    }
+
+    @PostMapping("saveCompany")
+    public ResponseResult saveCompany(@RequestBody Company company){
+        Company c = companyRepository.save(company);
+
+        System.out.println(c.getStaffList().size());
+
+        return ResponseResult.success("success");
     }
 }
