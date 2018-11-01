@@ -3,6 +3,7 @@ package cn.xyh.testjpa.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Staff {
@@ -13,7 +14,37 @@ public class Staff {
 
     private String staffName;
 
+    private String address;
+
+    private Date inTime;
+
+    private Date endTime;
+
     private int companyId;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getInTime() {
+        return inTime;
+    }
+
+    public void setInTime(Date inTime) {
+        this.inTime = inTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 
     public int getStaffId() {
         return staffId;
