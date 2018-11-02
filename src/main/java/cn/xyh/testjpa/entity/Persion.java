@@ -13,9 +13,10 @@ public class Persion implements Serializable, Cloneable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "int(20) COMMENT '年龄'")
     private int age;
 
+    @Column(nullable = false, columnDefinition = "varchar(50) COMMENT '名字'")
     private String name;
 
     public Persion() {

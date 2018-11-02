@@ -16,7 +16,7 @@ public class Company {
 
     private String companyCode;
 
-    private List<Staff> staffList;
+//    private List<Staff> staffList;
 
     public int getCompanyId() {
         return companyId;
@@ -42,11 +42,4 @@ public class Company {
         this.companyCode = companyCode;
     }
 
-    public List<Staff> getStaffList() {
-        return staffList;
-    }
-
-    public void setStaffList(List<Staff> staffList) {
-        this.staffList = staffList;
-    }
 }

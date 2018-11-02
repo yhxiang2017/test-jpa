@@ -2,6 +2,8 @@ package cn.xyh.testjpa.controller;
 
 import cn.xyh.testjpa.entity.Company;
 import cn.xyh.testjpa.entity.Persion;
+import cn.xyh.testjpa.entity.Staff;
+import cn.xyh.testjpa.param.SpecParam;
 import cn.xyh.testjpa.repository.CompanyRepository;
 import cn.xyh.testjpa.repository.PersionRepository;
 import cn.xyh.testjpa.util.ResponseResult;
@@ -9,8 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,8 +92,22 @@ public class PersionController {
     public ResponseResult saveCompany(@RequestBody Company company){
         Company c = companyRepository.save(company);
 
-        System.out.println(c.getStaffList().size());
+//        System.out.println(c.getStaffList().size());
 
         return ResponseResult.success("success");
+    }
+
+    @PostMapping("/testSpec")
+    public ResponseResult testSpec(@ModelAttribute SpecParam specParam){
+
+        return null;
+    }
+
+    private class MySpec implements Specification<Staff> {
+
+        @Override
+        public Predicate toPredicate(Root<Staff> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+            return null;
+        }
     }
 }
