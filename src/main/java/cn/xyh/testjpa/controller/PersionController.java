@@ -3,6 +3,7 @@ package cn.xyh.testjpa.controller;
 import cn.xyh.testjpa.entity.Company;
 import cn.xyh.testjpa.entity.Persion;
 import cn.xyh.testjpa.entity.Staff;
+import cn.xyh.testjpa.mapper.StaffMapper;
 import cn.xyh.testjpa.param.SpecParam;
 import cn.xyh.testjpa.repository.CompanyRepository;
 import cn.xyh.testjpa.repository.PersionRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -28,6 +30,8 @@ public class PersionController {
     private PersionRepository persionRepository;
     @Autowired
     private CompanyRepository companyRepository;
+
+
 
     @PostMapping("addPersion")
     public ResponseResult addPersion (@RequestBody Persion persion) {
@@ -102,6 +106,7 @@ public class PersionController {
 
         return null;
     }
+
 
     private class MySpec implements Specification<Staff> {
 

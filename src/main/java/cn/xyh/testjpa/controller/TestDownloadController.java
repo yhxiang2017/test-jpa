@@ -8,10 +8,32 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 @RestController
 public class TestDownloadController {
 
+
+    public static void main(String[] args) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        decimalFormat.setMaximumFractionDigits(2);
+        decimalFormat.setGroupingSize(0);
+        decimalFormat.setRoundingMode(RoundingMode.FLOOR);
+//        tempPrice = tempPrice - (tempPrice * (disCount / 10));
+
+        double a = 0.01;
+        double b = 9;
+//        System.out.println(a * (b / 10));
+
+        double c = a * (10 - b) / 10;
+        double e = Double.valueOf(decimalFormat.format(c));
+        System.out.println(e);
+        System.out.println(a - e);
+
+        double d = 0.001;
+
+    }
 
     @GetMapping("download")
     public void downloadFile(HttpServletResponse response) {
