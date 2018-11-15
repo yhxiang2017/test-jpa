@@ -18,6 +18,29 @@
     from staff
     where staff_id = #{staffId,jdbcType=INTEGER}
   </select>
+  <!--分页测试-->
+  <select id="selectListByParam" resultMap="BaseResultMap">
+    select * from staff where 1 = 1
+    <if test="address != null and address != ''">
+      address = #{address}
+    </if>
+    <if test="staffName != null and staffName != ''">
+      staff_name = #{staffName}
+    </if>
+    order by staff_id desc
+    limit #{offset}, #{pageSize}
+  </select>
+  <!--分页测试-->
+  <select id="selectListCount" resultType="java.lang.Integer">
+    select count(1) from staff
+    where 1 = 1
+    <if test="address != null and address != ''">
+      address = #{address}
+    </if>
+    <if test="staffName != null and staffName != ''">
+      staff_name = #{staffName}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from staff
     where staff_id = #{staffId,jdbcType=INTEGER}

@@ -21,6 +21,10 @@ public class AspectConfig {
     @Pointcut("execution(public * cn.xyh.testjpa.controller.*.*(..))")
     public void testPointcut() {}
 
+    @Pointcut("execution(public * cn.xyh.testjpa.util)")
+    public void testException() {}
+
+
     @Before("testPointcut()")
     public void doBefore (JoinPoint joinPoint) {
 
