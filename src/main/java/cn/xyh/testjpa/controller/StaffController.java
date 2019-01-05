@@ -30,7 +30,7 @@ public class StaffController {
     }
 
     @PostMapping("/fenyetest")
-    public ResponseResult fenyeTest(@RequestBody @Valid SomeParam someParam) {
+    public ResponseResult fenyeTest(@RequestBody SomeParam someParam) {
         return staffService.fenyeTest(someParam);
     }
 }

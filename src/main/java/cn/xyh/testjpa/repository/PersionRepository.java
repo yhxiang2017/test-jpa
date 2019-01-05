@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 public interface PersionRepository extends JpaRepository<Persion, Long> {
 
@@ -16,5 +17,6 @@ public interface PersionRepository extends JpaRepository<Persion, Long> {
     @Query(value = "select * from Persion", nativeQuery = true)
     Persion queryPersionById(long id);
 
-
+    @Override
+    Optional<Persion> findById(Long aLong);
 }

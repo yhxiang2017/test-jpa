@@ -11,6 +11,9 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
@@ -19,9 +22,26 @@ import org.w3c.dom.Element;
 @RestController
 public class FileUtil {
 
-    public static void main(String[] args) {
-        File file = new File("c:/test/d.xml");
-        FileUtil f = new FileUtil();
+    public static void main(String[] args) throws InterruptedException {
+        File file = new File("C:\\cd_das\\data\\2018-04-08.cd");
+        try {
+            InputStreamReader read = new InputStreamReader(new FileInputStream(file), "gbk");
+            BufferedReader reader = new BufferedReader(read);
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+//                fileContent += line;
+                DataModel dataModel = JSON.parseObject(line, new TypeReference<DataModel>() {});
+                Thread.sleep(0b111110100);
+                System.out.println(dataModel);
+            }
+            read.close();
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        FileUtil f = new FileUtil();
 //        f.createXMLByDOM(file);
 
 //        OutputStream out = new BufferedOutputStream();

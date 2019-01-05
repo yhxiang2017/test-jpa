@@ -1,7 +1,10 @@
 package cn.xyh.testjpa.param;
 
+import javax.validation.constraints.NotEmpty;
+
 public class SomeParam extends PageParam{
 
+    @NotEmpty
     private String staffName;
 
     private String address;

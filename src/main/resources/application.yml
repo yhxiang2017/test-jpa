@@ -1,3 +1,5 @@
+server:
+  port: 8011
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -8,7 +10,23 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  redis:
+    database: 0 #redis数据库索引（默认为0）
+    host: localhost
+    port: 6379
+    password:
+    timeout: 200 # 连接超时时间（毫秒）
+    jedis:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用复数表示没有限制）
+        max-wait: -1 # 连接池最大堵塞时间（使用复数表示没有限制）
+        max-idle: 8 # 连接池最大空闲时间
+        min-idle: 0 # 最小空闲连接
+
+
+
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: cn.xyh.testjap.model  # 注意：对应实体类的路径
+
