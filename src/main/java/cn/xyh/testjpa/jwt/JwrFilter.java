@@ -20,9 +20,9 @@ public class JwrFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             if(isProtectedUrl(request)) {
-                String token = request.getHeader("Authorization");
+//                String token = request.getHeader("Authorization");
                 //检查jwt令牌, 如果令牌不合法或者过期, 里面会直接抛出异常, 下面的catch部分会直接返回
-                JwtUtil.validateToken(token);
+                request = JwtUtil.validateTokenAndAddUserIdToHeader(request);
             }
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
@@ -33,6 +33,6 @@ public class JwrFilter extends OncePerRequestFilter {
     }
 
     private boolean isProtectedUrl(HttpServletRequest request) {
-        return !pathMatcher.match("/api/test/01", request.getServletPath());
+        return !pathMatcher.match("/api/test/token", request.getServletPath());
     }
 }
