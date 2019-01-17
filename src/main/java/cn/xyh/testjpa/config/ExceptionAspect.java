@@ -65,7 +65,7 @@ public class ExceptionAspect {
         map.put("msg", ex.getMessage());
 
         log.info("--------------开始打印异常信息--------------");
-        ex.printStackTrace();
+        System.out.println(ex);
         log.info("--------------结束打印异常信息--------------");
         return map;
     }

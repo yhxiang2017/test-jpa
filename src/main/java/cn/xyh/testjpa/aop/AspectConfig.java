@@ -47,7 +47,9 @@ public class AspectConfig {
     @AfterThrowing(pointcut = "testPointcut()", throwing = "e")
     public void doThrow(JoinPoint joinPoint, Throwable e) {
         if (e != null) {
+            log.info("--------------------------------开始打印异常信息--------------------------------");
             log.info(e.getMessage(), e);
+            log.info("--------------------------------结束打印异常信息--------------------------------");
         }
     }
 }
